@@ -5,6 +5,7 @@ import com.example.haren201930326.repository.ProductRepository;
 import com.example.haren201930326.repository.QProductRepository;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import static com.example.haren201930326.entity.QProduct.product;
 
 @Component
-public class ProductDAOImpl implements ProductDao {
+public class ProductDaoImpl implements ProductDao {
     private final ProductRepository productRepository;
     private final QProductRepository qProductRepository;
     private final JPAQueryFactory jpaQueryFactory;
@@ -27,7 +28,7 @@ public class ProductDAOImpl implements ProductDao {
     }
 
     @Autowired
-    public ProductDAOImpl(ProductRepository productRepository, QProductRepository qProductRepository, JPAQueryFactory jpaQueryFactory) {
+    public ProductDaoImpl(ProductRepository productRepository, QProductRepository qProductRepository, JPAQueryFactory jpaQueryFactory) {
         this.productRepository = productRepository;
         this.qProductRepository = qProductRepository;
         this.jpaQueryFactory = jpaQueryFactory;
