@@ -2,15 +2,13 @@ package com.example.haren201930326.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ProductDto {
+public class UserDto {
+    private String uId;
     private String name;
-    private int price;
-    private int stock;
+    private String email;
 }

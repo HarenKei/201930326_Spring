@@ -7,10 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductDto {
-    private String name;
+@AllArgsConstructor
+public class OrderDto {
+    private Long productId;
+    private String productName;
+    private String userId;
+    private String userName;
     private int price;
-    private int stock;
 }

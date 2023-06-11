@@ -5,28 +5,28 @@ import com.example.haren201930326.entity.Product;
 import java.util.List;
 
 public interface ProductDao {
-
+    //상품 등록
     Product insertProduct(Product product);
 
-    Product selectProduct(Long number);
+    //상품 수정
+    Product updateProduct(Long number, String name, int price, int stock) throws Exception;
 
-    List<Product> selectProductByName(String name);
+    //상품 개수 수정
+    Product updateProductStock(Long number, int stock) throws Exception;
 
-    Product selectProductByNameAndPrice(String name, int price);
+    //상품 삭제
+    void deleteProduct(Long number) throws Exception;
 
-    Long countByPrice(int price);
+    //전체 상품 리스트
+    List<Product> listAllProduct();
 
-    List<Product> listProductByName(String name);
-
+    //가격 내림차순 정렬 상품 리스트
     List<Product> listProductByPrice();
 
-    List<Product> listByStock(int stock);
+    //이름 통해 가져온 상품 리스트
+    List<Product> listProductByName(String name);
 
-    List<Product> allProduct();
+    //아이디를 통해 가져온 상품 정보
+    Product selectProduct(Long number);
 
-    boolean existsByNumber(Long number);
-
-    Product updateProductName(Long number, String name) throws Exception;
-
-    void deleteProduct(Long number) throws Exception;
 }

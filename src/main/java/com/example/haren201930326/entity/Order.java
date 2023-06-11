@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Table(name = "orders")
 public class Order {
@@ -21,7 +21,7 @@ public class Order {
     private long id;
 
     @Column(nullable = false)
-    private String productId;
+    private Long productId;
 
     @Column(nullable = false)
     private String productName;

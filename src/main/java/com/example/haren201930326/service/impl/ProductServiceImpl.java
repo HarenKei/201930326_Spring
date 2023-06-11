@@ -1,71 +1,107 @@
 package com.example.haren201930326.service.impl;
 
+import com.example.haren201930326.dao.ProductDao;
 import com.example.haren201930326.dto.ProductDto;
 import com.example.haren201930326.dto.ProductResponseDto;
+import com.example.haren201930326.entity.Product;
 import com.example.haren201930326.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final ProductDao productDao;
+
+
     @Override
     public ProductResponseDto getProduct(Long number) {
-        return null;
+        Product product = productDao.selectProduct(number);
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setName(product.getName());
+        productResponseDto.setNumber(product.getNumber());
+        productResponseDto.setPrice(product.getPrice());
+        productResponseDto.setStock(product.getStock());
+
+        return productResponseDto;
     }
 
     @Override
     public List<ProductResponseDto> getProductByName(String name) {
-        return null;
+        List<Product> product = productDao.listProductByName(name);
+        List<ProductResponseDto> selectProduct = product
+                .stream()
+                .map(ProductResponseDto::new)
+                .collect(Collectors.toList());
+        return selectProduct;
+    }
+
+    @Override
+    public List<ProductResponseDto> listAllProduct() {
+        List<Product> products = productDao.listAllProduct();
+        List<ProductResponseDto> selectProduct = products
+                .stream()
+                .map(ProductResponseDto::new)
+                .collect(Collectors.toList());
+        return selectProduct;
+    }
+
+    @Override
+    public List<ProductResponseDto> listAllByPriceDesc() {
+        List<Product> products = productDao.listProductByPrice();
+        List<ProductResponseDto> selectProduct = products
+                .stream()
+                .map(ProductResponseDto::new)
+                .collect(Collectors.toList());
+        return selectProduct;
     }
 
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
-        return null;
-    }
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
 
-    @Override
-    public ProductResponseDto getProductByNameAndPrice(String name, int price) {
-        return null;
-    }
+        Product saveProduct = productDao.insertProduct(product);
 
-    @Override
-    public List<ProductResponseDto> listProductByName(String name) {
-        return null;
-    }
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setName(saveProduct.getName());
+        productResponseDto.setNumber(saveProduct.getNumber());
+        productResponseDto.setPrice(saveProduct.getPrice());
+        productResponseDto.setStock(saveProduct.getStock());
 
-    @Override
-    public List<ProductResponseDto> list() {
-        return null;
-    }
-
-    @Override
-    public List<ProductResponseDto> listByStock(int stock) {
-        return null;
-    }
-
-    @Override
-    public List<ProductResponseDto> allProduct() {
-        return null;
-    }
-
-    @Override
-    public Long countByPrice(int price) {
-        return null;
-    }
-
-    @Override
-    public boolean existsByNumber(Long number) {
-        return false;
-    }
-
-    @Override
-    public ProductResponseDto changeProductName(Long number, String name) throws Exception {
-        return null;
+        return productResponseDto;
     }
 
     @Override
     public void deleteProduct(Long number) throws Exception {
+        productDao.deleteProduct(number);
+    }
 
+    @Override
+    public ProductResponseDto changeProduct(Long number, String name, int price, int stock) throws Exception {
+        Product changeProduct = productDao.updateProduct(number, name, price, stock);
+
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        productResponseDto.setName(changeProduct.getName());
+        productResponseDto.setNumber(changeProduct.getNumber());
+        productResponseDto.setPrice(changeProduct.getPrice());
+        productResponseDto.setStock(changeProduct.getStock());
+
+        return productResponseDto;
+    }
+
+    @Override
+    public ProductResponseDto changeProductStock(Long number, int stock) throws Exception {
+        Product changeProduct = productDao.updateProductStock(number, stock);
+        return new ProductResponseDto(changeProduct);
     }
 }
